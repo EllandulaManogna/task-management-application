@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">
+    Welcome {{ user.username }}
+</h2>
+
+<div class="card p-4 mb-4">
+
+    <h3>Add New Task</h3>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <label class="form-label">
+            Title
+        </label>
+
+        <input type="text"
+               name="title"
+               class="form-control mb-3"
+               required>
+
+        <label class="form-label">
+            Description
+        </label>
+
+        <textarea name="description"
+                  class="form-control mb-3"
+                  rows="3"
+                  required></textarea>
+
+        <label class="form-label">
+            Status
+        </label>
+
+        <select name="status"
+                class="form-control mb-3">
+
+            <option value="Pending">
+                Pending
+            </option>
+
+            <option value="In Progress">
+                In Progress
+            </option>
+
+            <option value="Completed">
+                Completed
+            </option>
+
+        </select>
+
+        <button type="submit"
+                class="btn btn-primary">
+
+            Add Task
+
+        </button>
+
+    </form>
+
+</div>
+
+
+<h3 class="mb-3">My Tasks</h3>
+
+{% for task in tasks %}
+
+<div class="card p-3 mb-3">
+
+    <h4>{{ task.title }}</h4>
+
+    <p>{{ task.description }}</p>
+
+    {% if task.status == 'Pending' %}
+        <span class="badge bg-warning">
+            Pending
+        </span>
+
+    {% elif task.status == 'In Progress' %}
+        <span class="badge bg-info">
+            In Progress
+        </span>
+
+    {% else %}
+        <span class="badge bg-success">
+            Completed
+        </span>
+    {% endif %}
+
+    <br><br>
+
+    <a href="{% url 'edit_task' task.id %}"
+       class="btn btn-warning">
+
+        Edit
+
+    </a>
+
+    {% if task.status != 'Completed' %}
+
+    <a href="{% url 'complete_task' task.id %}"
+       class="btn btn-success">
+
+        Mark Completed
+
+    </a>
+
+    {% endif %}
+
+    <a href="{% url 'delete_task' task.id %}"
+       class="btn btn-danger">
+
+        Delete
+
+    </a>
+
+</div>
+
+{% empty %}
+
+<div class="alert alert-info">
+
+    No tasks available.
+
+</div>
+
+{% endfor %}
+
+{% endblock %}

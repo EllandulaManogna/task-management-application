@@ -1,0 +1,13 @@
+body{
+    background-color:#f4f6f9;
+}
+
+.card{
+    border:none;
+    border-radius:15px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.btn{
+    border-radius:8px;
+}

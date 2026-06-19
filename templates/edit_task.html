@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card p-4">
+
+    <h2>Edit Task</h2>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <input type="text"
+               name="title"
+               value="{{ task.title }}"
+               class="form-control mb-3">
+
+        <textarea name="description"
+                  class="form-control mb-3">{{ task.description }}</textarea>
+
+        <select name="status"
+                class="form-control mb-3">
+
+            <option value="Pending"
+            {% if task.status == 'Pending' %}
+            selected
+            {% endif %}
+            >
+            Pending
+            </option>
+
+            <option value="In Progress"
+            {% if task.status == 'In Progress' %}
+            selected
+            {% endif %}
+            >
+            In Progress
+            </option>
+
+            <option value="Completed"
+            {% if task.status == 'Completed' %}
+            selected
+            {% endif %}
+            >
+            Completed
+            </option>
+
+        </select>
+
+        <button class="btn btn-success">
+            Update Task
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}
